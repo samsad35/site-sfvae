@@ -1,68 +1,567 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title></title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <header>
-    <div class="inner-width">
-      <h1>LEARNING AND CONTROLLING THE SOURCE-FILTER REPRESENTATION OF SPEECH WITH A VARIATIONAL AUTOENCODER</h1>
-      <div class="menu-icon">
-        <i class="fas fa-align-right"></i>
-      </div>
-    </div>
-  </header>
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<script>
+		  window.dataLayer = window.dataLayer || [];
+		  function gtag(){dataLayer.push(arguments);}
+		  gtag('js', new Date());
 
-  <div class="navigation-menu">
-    <nav>
-      <li><a href="team.html">Team</a></li>
-      <li><a href="#">PHASE RECONSTRUCTION PROBLEM</a></li>
-      <li><a href="#">VISUALISATION OF THE LEARNED LATENT SUBSPACES</a></li>
-      <li><a href="#">VOWELS GENERATION</a></li>
-	  <li><a href="#">CONTROLLING FACTORS OF VARIATION</a></li>
-	  <li><a href="#">VOICING AND WHISPERING</a></li>
-    </nav>
-  </div>
-  
-	<h1>
-		Abstract
-	</h1>
-  <p>
-	  Understanding and controlling latent representations in deep generative models is a challenging yet important problem for analyzing, transforming and generating various types of data.
-	  In speech processing, inspiring from the anatomical mechanisms of phonation, the source-filter model considers that speech signals are produced from a few independent and physically meaningful continuous latent factors,
-	  among which the fundamental frequency and the formants are of primary importance. In this work, we show that the source-filter model of speech production naturally arises in the latent space of a variational autoencoder (VAE)
-	  trained in an unsupervised fashion on a dataset of natural speech signals. Using speech signals generated with an artificial speech synthesizer, we experimentally demonstrate that the fundamental frequency and formant 
-	  frequencies are encoded in orthogonal subspaces of the VAE latent space and we develop a weakly-supervised method to accurately and independently control these speech factors of variation within the learned latent subspaces.
-	  Without requiring additional information such as text or human-labeled data, we propose a deep generative model of speech spectrograms that is conditioned on the fundamental frequency and formant frequencies,
-	  and which is applied to the transformation of speech signals.
-  </p>
-  
-	<h1>
-		VOWELS GENERATION
-	</h1>
-	<p>
-	As shown in the following figure, we have developed a graphical interface to generate vowels with the proposed method. The first and second formant frequencies are discriminative features of the vowels, 
-	as can be seen from a vowel diagram. In this graphical interface, the values of the frist and second formant frequencies correspond to the y-axis and x-axis respectively, and we can also choose the fundamental frequency in between 100Hz and 300Hz. Given these values, the proposed method generates a speech spectrogram and a time-domain signal is reconstructed with WaveGlow. 
-	We provide below examples of generated vowels with different values of the fundamental frequency and first two formant frequencies.
-	</p>
-	
-  <div class="inner-width">
-	<iframe src="https://docs.google.com/presentation/d/e/2PACX-1vQfEmH6gZ0fsiMjCaLJmkR09c3E2eW-GefsQWo5NcKAlFWYO_Lt25etYqm3z1UZQq6OlK-DizKcO7c5/embed?start=false&loop=false&delayms=3000" frameborder="0" width="960" height="569" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true">
-	</iframe>
-  </div>
-  
-  
-  <script>
-    $(".menu-icon").click(function(){
-      $(this).toggleClass("active");
-      $(".navigation-menu").toggleClass("active");
-      $(".menu-icon i").toggleClass("fa-times");
-    });
-  </script>
+		  gtag('config', 'UA-109046767-2');
+		</script>
+
+
+		<!-- CHANGE HERE -->
+		<title>Learning and controlling the source-filter representation of speech with a variational autoencoder</title>
+		<!-- ----------- -->
+
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300italic,600|Source+Code+Pro" rel="stylesheet" />
+		<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+		<script src="js/jquery.dropotron.min.js"></script>
+		<script src="js/skel.min.js">
+		{
+			prefix: 'css/style',
+			preloadStyleSheets: true,
+			resetCSS: true,
+			boxModel: 'border',
+			grid: { gutters: 30 },
+			breakpoints: {
+				wide: { range: '1200-', containers: 1140, grid: { gutters: 50 } },
+				narrow: { range: '481-1199', containers: 960 },
+				mobile: { range: '-480', containers: 'fluid', lockViewport: true, grid: { collapse: true } }
+			}
+		}
+		</script>
+
+		<style>
+			table tr th, table tr td {
+			text-align: center;
+			vertical-align: middle;
+			border: 0px solid white;
+			border-collapse: collapse;
+			}
+		</style>
+
+		<style type="text/css">a {text-decoration: none}</style>
+
+	</head>
+
+	<body>
+
+		<div id="site_content">
+		<div class="container">
+
+		<!-- Features -->
+		<div class="row">
+			<section class="12u">
+
+				<h2 style="text-align: center;">
+					Learning and controlling the source-filter representation of speech with a variational autoencoder
+				</h2>
+
+				<p style="text-align: center;">
+					Sadok samir<sup>1</sup>&emsp;&emsp; Simon Leglaive<sup>1</sup>&emsp;&emsp; Laurent Girin<sup>2</sup>&emsp;&emsp; Xavier Alameda-Pineda<sup>3</sup>&emsp;&emsp; Renaud Séguier<sup>1</sup>&emsp;&emsp;
+				</p>
+
+				<p style="text-align: center; line-height: 78%;">
+					<sup>1</sup>CentraleSupélec, IETR UMR CNRS 6164, France &emsp;&emsp; <br>
+					<sup>2</sup>Univ. Grenoble Alpes, CNRS, Grenoble-INP, GIPSA-lab, France  &emsp;&emsp;<br>
+					<sup>3</sup>Inria, Univ. Grenoble Alpes, CNRS, LJK, France<br>
+				</p>
+
+				<p style="text-align: center;">
+					Inproceedings
+				</p>
+
+				<p style="text-align: center;">
+					<a href="https://openreview.net/pdf?id=zxEfpcmTDnF" target="_blank" rel="noopener">Article</a> | 
+					<!-- <a href="#audio">Audio examples</a> |  -->
+					<!-- <a href="documents/presentation_icassp2020.pdf">Slides</a> |  -->
+					<a href="https://github.com/samsad35/source-filter-vae" target="_blank" rel="noopener">Code</a> | 
+					<a href="https://hal.archives-ouvertes.fr/hal-03603791v1/bibtex" target="_blank" rel="noopener">Bibtex</a> | 
+					<!-- <a href="#acknowledgement">Acknowledgement</a> -->
+				</p>
+
+				<!-- Abstract -->
+				<strong><span style="font-size: large;"><a name="abstract"></a>Abstract</span></strong>
+				<hr>
+
+				<table width="100%">
+				<tr>
+					<td style="width: 100%; text-align: justify; vertical-align: top;">
+						Understanding and controlling latent representations in deep generative models is a challenging yet important problem for analyzing, transforming and generating various types of data. In speech processing, inspiring from the anatomical mechanisms of phonation, the source-filter model considers that speech signals are produced from a few independent and physically meaningful continuous latent factors, among which the fundamental frequency and the formants are of primary importance. In this work, we show that the source-filter model of speech production naturally arises in the latent space of a variational autoencoder (VAE) trained in an unsupervised fashion on a dataset of natural speech signals. Using only a few seconds of labeled speech signals generated with an artificial speech synthesizer, we experimentally demonstrate that the fundamental frequency and formant frequencies are encoded in orthogonal subspaces of the VAE latent space and we develop a weakly-supervised method to accurately and independently control these speech factors of variation within the learned latent subspaces. Without requiring additional information such as text or human-labeled data, we propose a deep generative model of speech spectrograms that is conditioned on the fundamental frequency and formant frequencies, and which is applied to the transformation of speech signals. </td>
+				<!-- 
+				<td style="width: 5%; text-align: justify;"></td>
+				<td style="width: 30%; text-align: left;"><img class="wp-image-7444 aligncenter" src="https://assets.afcdn.com/recipe/20200506/110674_w1024h768c1cx1920cy2880.jpg" alt="" width="200" /></a></td>
+				-->
+				</tr>
+				</table>
+
+
+				<!-- Phase reconstruction problem -->
+				<span style="font-size: large;"><a name="phase_reconstruction"></a><strong>Phase reconstruction problem</strong></span>
+				<hr>
+				<p style = "text-align: justify; vertical-align: top;">Before listening to examples of speech signals generated with the proposed method, we would like to emphasize the problem of reconstructing time-domain signals from spectrograms (i.e., reconstructing the phase). Let us consider an original speech signal from which we extract a spectrogram using the short-term Fourier transform (STFT). We map this original spectrogram through a pre-trained variational autoencoder (VAE), from which we obtain a reconstructed spectrogram (after encoding-decoding, see the paper for more details on the VAE architecture). Then, we consider two techniques for reconstructing the time-domain speech signal from the output spectrogram: 
+					<ul>
+					  <li>Below, on the left, you can listen to the signal reconstructed by inverse STFT, using the exact oracle phase of the original signal. </li>
+					  <li>Below, on the right, you can listen to the signal reconstructed using WaveGlow (Prenger et al., 2019), a neural vocoder trained on a single-speaker speech dataset.</li>
+					</ul>
+				By comparing the quality of both reconstructions, we conclude that most artifacts in the output time-domain speech signal are due to the quality of the reconstructed phase, and not to the quality of the output spectrogram provided by the VAE. When performing transformations in the latent space of the VAE, we do not have access to an oracle phase and thus have to use WaveGlow (or other phase reconstruction techniques).<p/>
+				<!-- </center> -->
+
+					<table style="font-size: 100%";>
+						<tr>
+							<th style = "width: 35%; text-align: justify; vertical-align: top;">Signal reconstructed by inverse STFT from the VAE output spectrogram and the original oracle phase.</th>
+							<td style="width: 10%; text-align: justify;"></td>
+							<th style = "width: 35%; text-align: justify; vertical-align: top;">Signal reconstructed by WaveGlow from the VAE output spectrogram.</th>
+						</tr>
+						<tr>
+							<td style="width: 35%; text-align: center; vertical-align: middle; height: 39px;"><audio style="width: 450px;" controls="controls" preload="none" src="demos/sf_vae/phase_reconstruction/femal_withf0_ISTFT.wav"></audio></td>
+							<td style="width: 10%; text-align: justify;"></td>
+							<td style="width=100%; text-align: center; vertical-align: middle; height: 39px;"><audio style="width: 450px;" controls="controls" preload="none" src="demos/sf_vae/phase_reconstruction/female_withf0.wav"></audio></td>
+						</td>
+						</tr>
+
+						<tr>
+							<td style="width: 35%; text-align: center; vertical-align: middle; height: 39px;"><audio style="width: 450px;" controls="controls" preload="none" src="demos/sf_vae/phase_reconstruction/femal_withf0_ISTFT.wav"></audio></td>
+							<td style="width: 10%; text-align: justify;"></td>
+							<td style="width=100%; text-align: center; vertical-align: middle; height: 39px;"><audio style="width: 450px;" controls="controls" preload="none" src="demos/sf_vae/phase_reconstruction/femal_withf0_ISTFT.wav"></audio></td>
+						</td>
+						</tr>
+					</table>
+
+			<!-- VISUALISATION OF THE LEARNED LATENT SUBSPACES -->
+			<span style="font-size: large;"><a name="audio"></a><strong>Visualisation of the learned latent subspaces</strong></span>
+			<hr>
+			<p style = "text-align: justify; vertical-align: top;">
+				The following figures show trajectories of different speech factors of variation (from left to right: fundamental frequency, first, second and third formant frequencies) within the learned latent subspaces (See Appendix C.1 in the paper for more details). It can be seen that two data vectors corresponding to close values of a given factor have projections that are also close in the learned latent subspaces. This can be seen from the color bars that indicate the values of the factors of variation.
+			</p>
+
+			<table>
+				<td>
+					<img src="demos/sf_vae/trajectories/pitch_viz.gif" alt="this slowpoke moves"  width="250" />
+				</td>
+				<td>
+					<img src="demos/sf_vae/trajectories/f1_viz.gif" alt="this slowpoke moves"  width="250" />
+				</td>
+				<td>
+					<img src="demos/sf_vae/trajectories/f2_viz.gif" alt="this slowpoke moves"  width="250" />
+				</td>
+				<td>
+					<img src="demos/sf_vae/trajectories/f3_viz.gif" alt="this slowpoke moves"  width="250" />
+				</td>
+			</table>
+			
+
+		  	<!-- VOWELS GENERATION -->
+			<strong><span style="font-size: large;"><a name="VOWELS"></a>Vowel Generation</span></strong>
+			<hr>
+			<p style = "text-align: justify; vertical-align: top;">
+				As shown in the following figure, we have developed a graphical interface to generate vowels with the proposed method. The first and second formant frequencies are discriminative features of the vowels, as can be seen from a vowel diagram. In this graphical interface, the values of the frist and second formant frequencies correspond to the y-axis and x-axis respectively, and we can also choose the fundamental frequency in between 100Hz and 300Hz. Given these values, the proposed method generates a speech spectrogram and a time-domain signal is reconstructed with WaveGlow. We provide below examples of generated vowels with different values of the fundamental frequency and first two formant frequencies.
+			</p>
+
+			<div style="text-align: center;" class="inner-width">
+				<iframe src="https://docs.google.com/presentation/d/e/2PACX-1vQfEmH6gZ0fsiMjCaLJmkR09c3E2eW-GefsQWo5NcKAlFWYO_Lt25etYqm3z1UZQq6OlK-DizKcO7c5/embed?start=false&loop=false&delayms=3000" frameborder="0" width="960" height="569" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true">
+				</iframe>
+		  	</div>
+		  	<table style="width:50%; margin-left: auto; margin-right: auto;">
+				<thead>
+			        <tr>
+			            <th style = "width: 100%; text-align: justify; vertical-align: top;">
+			            	<b>Generation of vowels (/a/, /e/, /i/, /o/, /u/)</b>. Using the proposed conditional deep generative model of speech spectrograms, we generate a speech signal with a continuous transition between 5 vowels. Input trajectories of the fundamental frequency (linearly increasing between 100 and 200 Hz) and three first formant frequencies are shown with black lines in the figure (see the legend).
+			            </th>
+			        </tr>
+			    </thead>
+
+		  		<tr>
+			  		<th style = "width: 100%;">
+			  			<img src="demos/sf_vae/vowels/gen_spec.png" alt="this slowpoke moves"  width="800" />
+			  		</th>
+		  		</tr>
+
+		  		<tr>
+					<th style="width: 50%; text-align: center; vertical-align: middle; height: 39px;">
+						<audio style="width: 800px;" controls="controls" preload="none" src="demos/sf_vae/vowels/Original.wav"></audio>
+					</th>
+				</tr>
+		  	</table>
+
+		  	<!--  CONTROLLING FACTORS OF VARIATION -->
+		  	<strong><span style="font-size: large;"><a name="controlling"></a>Controlling factors of variation</span></strong>
+			<hr>
+			<h2>F0 generation</h2>
+			<table style="width:50%; margin-left: auto; margin-right: auto;">
+				<thead>
+			        <tr>
+			            <th style = "width: 50%; text-align: justify; vertical-align: top;">
+			            	In this animation, we generate spectra where only the fendamental frequency varies in the input of the method, the value of the other factors (formant frequencies) is fixed.
+
+			            </th>
+			        </tr>
+			    </thead>
+
+		  		<tr>
+			  		<th style = "width: 50%;">
+			  			<img src="demos/sf_vae/controlling/f0.gif" alt="f0 gif"  width="800" />
+			  		</th>
+		  		</tr>
+		  	</table>
+
+		  	<h2>F0 transformation</h2>
+		  	<p style = "text-align: justify; vertical-align: top;">
+		  		The examples below are obtained with the proposed method (Equation 8 in the paper) where we only modify the fundamental frequency (f0) according to an input trajecteory represented by the dashed line in blue. The trajectory of the formant frequencies are defined by the input original speech signal and they are not altered by the proposed method.
+		  	</p>
+
+		  	<table style="width:100%; margin-left: auto; margin-right: auto;">
+				<thead>
+			        <tr>
+			            <th style = "width: 50%; text-align: center; vertical-align: top;">
+			            	Original spectrogram.
+
+			            </th>
+			        </tr>
+			    </thead>
+
+		  		<tr>
+			  		<th style = "width: 50%;">
+			  			<img src="demos/sf_vae/controlling/original-f0.png" alt="original spectrogram"  width="500" />
+			  		</th>
+		  		</tr>
+
+		  		<tr>
+					<th style="width: 50%; text-align: center; vertical-align: middle; height: 39px;">
+						<audio style="width: 500px;" controls="controls" preload="none" src="demos/sf_vae/controlling/original-f0.wav"></audio>
+					</th>
+				</tr>
+		  	</table>
+
+		  	<table style="width:100%; margin-left: auto; margin-right: auto;">
+
+		  		<tr>
+			  		<th style = "width: 40%;">
+			  			<img src="demos/sf_vae/controlling/f0-upward-slope.png" alt="up"  width="500" />
+			  		</th>
+
+			  		<th style = "width: 40%;">
+			  			<img src="demos/sf_vae/controlling/f0_down-slope.png" alt="down"  width="500" />
+			  		</th>
+
+		  		</tr>
+
+		  		<tr>
+					<th style="width: 40%; text-align: center; vertical-align: middle; height: 39px;">
+						<audio style="width: 500px;" controls="controls" preload="none" src="demos/sf_vae/controlling/f0-upward-slope.wav"></audio>
+					</th>
+
+					<th style="width: 40%; text-align: center; vertical-align: middle; height: 39px;">
+						<audio style="width: 500px;" controls="controls" preload="none" src="demos/sf_vae/controlling/f0_down-slope.wav"></audio>
+					</th>
+				</tr>
+
+				<hr>
+				
+				<tr>
+			  		<th style = "width: 40%;">
+			  			<img src="demos/sf_vae/controlling/f0-gaussian.png" alt="up"  width="500" />
+			  		</th>
+
+			  		<th style = "width: 40%;">
+			  			<img src="demos/sf_vae/controlling/f0-multi.png" alt="down"  width="500" />
+			  		</th>
+
+		  		</tr>
+
+		  		<tr>
+					<th style="width: 40%; text-align: center; vertical-align: middle; height: 39px;">
+						<audio style="width: 500px;" controls="controls" preload="none" src="demos/sf_vae/controlling/f0-gaussian.wav"></audio>
+					</th>
+
+					<th style="width: 40%; text-align: center; vertical-align: middle; height: 39px;">
+						<audio style="width: 500px;" controls="controls" preload="none" src="demos/sf_vae/controlling/f0-multi.wav"></audio>
+					</th>
+				</tr>
+		  	</table>
+		  	<hr>
+
+		  	<p style = "text-align: justify; vertical-align: top;">
+		  		Each line in this figure below corresponds to a speech signal uttered by a different speaker. Left: spectrogram of the original speech signal; Right: transformed spectrogram where the fundamental frequency is set constant over time.
+		  	</p>
+
+		  	<table style="width:100%; margin-left: auto; margin-right: auto;">
+
+		  		<tr>
+			  		<th style = "width: 40%;">
+			  			<img src="demos/sf_vae/controlling/constant/original-n.png" alt="up"  width="500" />
+			  		</th>
+
+			  		<th style = "width: 40%;">
+			  			<img src="demos/sf_vae/controlling/constant/original-t.png" alt="down"  width="500" />
+			  		</th>
+
+		  		</tr>
+
+		  		<tr>
+					<th style="width: 40%; text-align: center; vertical-align: middle; height: 39px;">
+						<audio style="width: 500px;" controls="controls" preload="none" src="demos/sf_vae/controlling/constant/original-n.wav"></audio>
+					</th>
+
+					<th style="width: 40%; text-align: center; vertical-align: middle; height: 39px;">
+						<audio style="width: 500px;" controls="controls" preload="none" src="demos/sf_vae/controlling/constant/original-t.wav"></audio>
+					</th>
+				</tr>
+				
+				<tr>
+			  		<th style = "width: 40%;">
+			  			<img src="demos/sf_vae/controlling/constant/original2-n.png" alt="up"  width="500" />
+			  		</th>
+
+			  		<th style = "width: 40%;">
+			  			<img src="demos/sf_vae/controlling/constant/original2-t.png" alt="down"  width="500" />
+			  		</th>
+
+		  		</tr>
+
+		  		<tr>
+					<th style="width: 40%; text-align: center; vertical-align: middle; height: 39px;">
+						<audio style="width: 500px;" controls="controls" preload="none" src="demos/sf_vae/controlling/constant/original2-n.wav"></audio>
+					</th>
+
+					<th style="width: 40%; text-align: center; vertical-align: middle; height: 39px;">
+						<audio style="width: 500px;" controls="controls" preload="none" src="demos/sf_vae/controlling/constant/original2-t.wav"></audio>
+					</th>
+				</tr>
+
+				<tr>
+			  		<th style = "width: 40%;">
+			  			<img src="demos/sf_vae/controlling/constant/original3-n.png" alt="up"  width="500" />
+			  		</th>
+
+			  		<th style = "width: 40%;">
+			  			<img src="demos/sf_vae/controlling/constant/original3-t.png" alt="down"  width="500" />
+			  		</th>
+
+		  		</tr>
+
+		  		<tr>
+					<th style="width: 40%; text-align: center; vertical-align: middle; height: 39px;">
+						<audio style="width: 500px;" controls="controls" preload="none" src="demos/sf_vae/controlling/constant/original3-n.wav"></audio>
+					</th>
+
+					<th style="width: 40%; text-align: center; vertical-align: middle; height: 39px;">
+						<audio style="width: 500px;" controls="controls" preload="none" src="demos/sf_vae/controlling/constant/original3-t.wav"></audio>
+					</th>
+				</tr>
+		  	</table>
+
+		  	<h2>F1, F2 and F3 Generation</h2>
+		  	<p style = "text-align: justify; vertical-align: top;">
+		  		In these animations below, we generate spectra (left) and corresponding spectrograms (right) using Equation 9 in the paper. For each animation, we vary one single factor at a time.
+		  	</p>
+
+		  	<table style="width:100%; margin-left: auto; margin-right: auto;">
+
+		  		<tr>
+			  		<th style = "width: 40%;">
+			  			We vary the formant 1, while fixing the other formants as well as the pitch. One can notice by listening to the audio signal the opening of the mouth.
+			  		</th>
+
+			  		<th style="width: 40%; text-align: center; vertical-align: middle; height: 39px;">
+						<audio style="width: 500px;" controls="controls" preload="none" src="demos/sf_vae/controlling/F1-2-3/F1.wav"></audio>
+					</th>
+
+		  		</tr>
+
+		  		<tr>
+					<th style = "width: 40%;">
+			  			<img src="demos/sf_vae/controlling/F1-2-3/F1.gif" alt="up"  width="500" />
+			  		</th>
+
+					<th style = "width: 40%;">
+			  			<img src="demos/sf_vae/controlling/F1-2-3/F1_.gif" alt="up"  width="500" />
+			  		</th>
+				</tr>
+		  	</table>
+
+		  	<hr>
+
+		  	<table style="width:100%; margin-left: auto; margin-right: auto;">
+
+		  		<tr>
+			  		<th style = "width: 40%;">
+						We vary the formant 2, while fixing the other formants as well as the pitch.
+			  		</th>
+
+			  		<th style="width: 40%; text-align: center; vertical-align: middle; height: 39px;">
+						<audio style="width: 500px;" controls="controls" preload="none" src="demos/sf_vae/controlling/F1-2-3/F2.wav"></audio>
+					</th>
+
+		  		</tr>
+
+		  		<tr>
+					<th style = "width: 40%;">
+			  			<img src="demos/sf_vae/controlling/F1-2-3/F2.gif" alt="up"  width="500" />
+			  		</th>
+
+					<th style = "width: 40%;">
+			  			<img src="demos/sf_vae/controlling/F1-2-3/F2_.gif" alt="up"  width="500" />
+			  		</th>
+				</tr>
+		  	</table>
+
+		  	<hr>
+
+		  	<table style="width:100%; margin-left: auto; margin-right: auto;">
+
+		  		<tr>
+			  		<th style = "width: 40%;">
+						We vary the formant 3, while fixing the other formants as well as the pitch.	
+			  		</th>
+
+			  		<th style="width: 40%; text-align: center; vertical-align: middle; height: 39px;">
+						<audio style="width: 500px;" controls="controls" preload="none" src="demos/sf_vae/controlling/F1-2-3/F11.wav"></audio>
+					</th>
+
+		  		</tr>
+
+		  		<tr>
+					<th style = "width: 40%;">
+			  			<img src="demos/sf_vae/controlling/F1-2-3/F3.gif" alt="up"  width="500" />
+			  		</th>
+
+					<th style = "width: 40%;">
+			  			<img src="demos/sf_vae/controlling/F1-2-3/F3_.gif" alt="up"  width="500" />
+			  		</th>
+				</tr>
+		  	</table>
+
+
+		  	<!-- VOICING AND WHISPERING -->
+		  	<strong><span style="font-size: large;"><a name="controlling"></a>Voicing and whispering</span></strong>
+			<hr>
+		  	<p style = "text-align: justify; vertical-align: top;">
+		  		In the examples below, we show that the proposed method can remove the pitch of voiced speech signals (i.e., transformation to a whispered speech signal) and it can also add pitch to whispered speech signals (i.e., transformation to a voiced speech signal). A whispered speech signal is obtained from a voiced speech signal by simply subtracting the latent representation of the signal and its projection onto the subspace corresponding to f0 (i.e., by considering only the two first terms in the right-hand side of Equation (8)). A voiced speech signal is obtained from a whispered speech signal by simply adding the latent representation of the signal and the target component provided by the regression model mapped from the learned subspace to the original latent space (i.e., by considering only the first and last terms in the right-hand side of Equation (8)).
+		  		<br>	
+		  		Whispering results in a spectrogram where the harmonic component is neutralized, while voicing adds a harmonic component. The original formant structure is preserved in both cases. This is remarkable considering that the VAE was not trained on whispered speech signals, and it further confirms that the proposed method dissociates the source and the filter contributions in the VAE latent space.
+		  	</p>
+
+		  	<h2>Whispering</h2>
+
+		  	<table style="width:100%; margin-left: auto; margin-right: auto;">
+		  		<tr>
+			  		<th style = "width: 40%;">
+						Signal reconstructed by WaveGlow from the VAE output spectrogram without transformation in the latent space.
+			  		</th>
+
+			  		<th style="width: 40%; text-align: center; vertical-align: middle; height: 39px;">
+						Signal reconstructed by WaveGlow from the VAE output spectrogram with transformation (whispering) in the latent space.
+					</th>
+
+		  		</tr>
+
+		  		<tr>
+			  		<th style = "width: 40%;">
+			  			<img src="demos/sf_vae/controlling/whispering/spec_withf0.png" alt="up"  width="500" />
+			  		</th>
+
+			  		<th style = "width: 40%;">
+			  			<img src="demos/sf_vae/controlling/whispering/spec_withoutf0.png" alt="down"  width="500" />
+			  		</th>
+
+		  		</tr>
+
+		  		<tr>
+					<th style="width: 40%; text-align: center; vertical-align: middle; height: 39px;">
+						<audio style="width: 500px;" controls="controls" preload="none" src="demos/sf_vae/controlling/whispering/spec_withf0.wav"></audio>
+					</th>
+
+					<th style="width: 40%; text-align: center; vertical-align: middle; height: 39px;">
+						<audio style="width: 500px;" controls="controls" preload="none" src="demos/sf_vae/controlling/whispering/spec_withoutf0.wav"></audio>
+					</th>
+				</tr>
+
+				<tr>
+			  		<th style = "width: 40%;">
+			  			<img src="demos/sf_vae/controlling/whispering/spec2_withf0.png" alt="up"  width="500" />
+			  		</th>
+
+			  		<th style = "width: 40%;">
+			  			<img src="demos/sf_vae/controlling/whispering/spec2_withoutf0.png" alt="down"  width="500" />
+			  		</th>
+
+		  		</tr>
+
+		  		<tr>
+					<th style="width: 40%; text-align: center; vertical-align: middle; height: 39px;">
+						<audio style="width: 500px;" controls="controls" preload="none" src="demos/sf_vae/controlling/whispering/spec2_withf0.wav"></audio>
+					</th>
+
+					<th style="width: 40%; text-align: center; vertical-align: middle; height: 39px;">
+						<audio style="width: 500px;" controls="controls" preload="none" src="demos/sf_vae/controlling/whispering/spec2_withoutf0.wav"></audio>
+					</th>
+				</tr>
+
+				<tr>
+			  		<th style = "width: 40%;">
+			  			<img src="demos/sf_vae/controlling/whispering/spec3_withf0.png" alt="up"  width="500" />
+			  		</th>
+
+			  		<th style = "width: 40%;">
+			  			<img src="demos/sf_vae/controlling/whispering/spec3_withoutf0.png" alt="down"  width="500" />
+			  		</th>
+
+		  		</tr>
+
+		  		<tr>
+					<th style="width: 40%; text-align: center; vertical-align: middle; height: 39px;">
+						<audio style="width: 500px;" controls="controls" preload="none" src="demos/sf_vae/controlling/whispering/spec3_withf0.wav"></audio>
+					</th>
+
+					<th style="width: 40%; text-align: center; vertical-align: middle; height: 39px;">
+						<audio style="width: 500px;" controls="controls" preload="none" src="demos/sf_vae/controlling/whispering/spec3_withoutf0.wav"></audio>
+					</th>
+				</tr>
+		  	</table>
+
+		  	<h2>Voicing</h2>
+
+		  	<table style="width:100%; margin-left: auto; margin-right: auto;">
+		  		<tr>
+			  		<th style = "width: 40%;">
+			  			Signal reconstructed by WaveGlow from the VAE output spectrogram without transformation in the latent space.
+					</th>
+
+			  		<th style="width: 40%; text-align: center; vertical-align: middle; height: 39px;">
+						Signal reconstructed by WaveGlow from the VAE output spectrogram with transformation (voicing) in the latent space.
+					</th>
+
+		  		</tr>
+
+		  		<tr>
+		  			<th style = "width: 40%;">
+			  			<img src="demos/sf_vae/controlling/voicing/spec_withoutf0.png" alt="down"  width="500" />
+			  		</th>
+
+			  		<th style = "width: 40%;">
+			  			<img src="demos/sf_vae/controlling/voicing/spec_withf0.png" alt="up"  width="500" />
+			  		</th>
+
+		  		</tr>
+
+		  		<tr>
+		  			<th style="width: 40%; text-align: center; vertical-align: middle; height: 39px;">
+						<audio style="width: 500px;" controls="controls" preload="none" src="demos/sf_vae/controlling/voicing/spec_withoutf0.wav"></audio>
+					</th>
+
+					<th style="width: 40%; text-align: center; vertical-align: middle; height: 39px;">
+						<audio style="width: 500px;" controls="controls" preload="none" src="demos/sf_vae/controlling/voicing/spec_withf0.wav"></audio>
+					</th>
+				</tr>
+		  	</table>
+
+			</section>
+		</div>
+	</div>
+</div>
+
 </body>
 </html>
