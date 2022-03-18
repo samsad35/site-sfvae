@@ -209,7 +209,7 @@
 
 		  	<h2>F0 transformation</h2>
 		  	<p style = "text-align: justify; vertical-align: top;">
-		  		The examples below are obtained with the proposed method (Equation 8 in the paper) where we only modify the fundamental frequency (f0) according to an input trajecteory represented by the dashed line in blue. The trajectory of the formant frequencies are defined by the input original speech signal and they are not altered by the proposed method.
+		  		The examples below are obtained with the proposed method (Equation 10 in the paper) where we only modify the fundamental frequency (f0) according to an input trajecteory represented by the dashed line in blue. The trajectory of the formant frequencies are defined by the input original speech signal and they are not altered by the proposed method.
 		  	</p>
 
 		  	<table style="width:100%; margin-left: auto; margin-right: auto;">
@@ -352,7 +352,7 @@
 					</th>
 				</tr>
 		  	</table>
-
+			
 		  	<h2>F1, F2 and F3 Generation</h2>
 		  	<p style = "text-align: justify; vertical-align: top;">
 		  		In these animations below, we generate spectra (left) and corresponding spectrograms (right) using Equation 9 in the paper. For each animation, we vary one single factor at a time.
@@ -439,7 +439,7 @@
 		  	<strong><span style="font-size: large;"><a name="controlling"></a>Voicing and whispering</span></strong>
 			<hr>
 		  	<p style = "text-align: justify; vertical-align: top;">
-		  		In the examples below, we show that the proposed method can remove the pitch of voiced speech signals (i.e., transformation to a whispered speech signal) and it can also add pitch to whispered speech signals (i.e., transformation to a voiced speech signal). A whispered speech signal is obtained from a voiced speech signal by simply subtracting the latent representation of the signal and its projection onto the subspace corresponding to f0 (i.e., by considering only the two first terms in the right-hand side of Equation (8)). A voiced speech signal is obtained from a whispered speech signal by simply adding the latent representation of the signal and the target component provided by the regression model mapped from the learned subspace to the original latent space (i.e., by considering only the first and last terms in the right-hand side of Equation (8)).
+		  		In the examples below, we show that the proposed method can remove the pitch of voiced speech signals (i.e., transformation to a whispered speech signal) and it can also add pitch to whispered speech signals (i.e., transformation to a voiced speech signal). A whispered speech signal is obtained from a voiced speech signal by simply subtracting the latent representation of the signal and its projection onto the subspace corresponding to f0 (i.e., by considering only the two first terms in the right-hand side of Equation (10)). A voiced speech signal is obtained from a whispered speech signal by simply adding the latent representation of the signal and the target component provided by the regression model mapped from the learned subspace to the original latent space (i.e., by considering only the first and last terms in the right-hand side of Equation (10)).
 		  		<br>	
 		  		Whispering results in a spectrogram where the harmonic component is neutralized, while voicing adds a harmonic component. The original formant structure is preserved in both cases. This is remarkable considering that the VAE was not trained on whispered speech signals, and it further confirms that the proposed method dissociates the source and the filter contributions in the VAE latent space.
 		  	</p>
@@ -521,7 +521,16 @@
 					</th>
 				</tr>
 		  	</table>
-
+			
+			<p style = "text-align: justify; vertical-align: top;">
+				Each line in this figure below corresponds to a speech signal uttered by a different speaker. Left: spectrogram of the original speech signal; Middle: transformed spectrogram where the fundamental frequency is set constant over time; Right: transformed spectrogram where the original voiced speech signal (left) is converted into a whispered speech signal (i.e., the fundamental frequency is removed).
+			</p>
+			<table style="width:100%; margin-left: auto; margin-right: auto;">
+				<tr style = "width: 40%;">
+					<embed  src="demos/sf_vae/controlling/app_transformationf0+unvoiced.pdf" width=1200 height=400 type='application/pdf'/>
+				</tr>
+			</table>
+			
 		  	<h2>Voicing</h2>
 
 		  	<table style="width:100%; margin-left: auto; margin-right: auto;">
